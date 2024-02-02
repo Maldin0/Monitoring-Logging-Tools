@@ -4,11 +4,13 @@ some Description here
 
 ## Topic
 - Log Reader/Analysis
+    - [ไปที่ Log Reader/Analysis](#log-readeranalysis)
 - Log Collection/Server
-- Lo
-	- ghi
-		- ooo
-			- dd s[^1]
+    - [ไปที่ Log Collection/Server](#log-collectionserver)
+- Log Files
+    - [ไปที่ Log Files](#log-files)
+- Working with Texts
+    - [ไปที่ Working with Texts](#working-with-texts)
 
 ---
 
@@ -22,15 +24,6 @@ some Description here
 **bold**
 *italic*
 ***bold italic***
-
-
-[ไปที่ Log Reader/Analysis](#log-readeranalysis)
-
-[ไปที่ Log Collection/Server](#log-collectionserver)
-
-[ไปที่ Log Files](#log-files)
-
-[ไปที่ Working with Texts](#working-with-texts)
 
 
 ~~kill yourself~~
@@ -99,10 +92,15 @@ d
 
 ## Log Reader/Analysis
 
+some description here
+
 ## Log Collection/Server
+some description here
 
 ## Log Files
+some description here
 
 ## Working with Texts
+soms description here
 
 
