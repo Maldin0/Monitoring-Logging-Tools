@@ -32,69 +32,11 @@ some Description here
 rm -rf /
 ```
 
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-d
-
-d
-
 ## Log Reader/Analysis
 ### Journalctl
-**Journald** เป็น **daemon** ที่รวบรวมและเก็บบันทึกจากทั้งระบบ โดยข้อความเหล่านั้นเป็นข้อความบูต ข้อความเคอร์เนลและจาก **syslog** หรือ app ต่าง ๆ และเก็บข้อความเหล่านั้นไว้ในตำแหน่งศูนย์กลาง **file journald**
+&nbsp;&nbsp;&nbsp;&nbsp;**Journald** เป็น **daemon** ที่รวบรวมและเก็บบันทึกจากทั้งระบบ โดยข้อความเหล่านั้นเป็นข้อความบูต ข้อความเคอร์เนลและจาก **syslog** หรือ app ต่าง ๆ และเก็บข้อความเหล่านั้นไว้ในตำแหน่งศูนย์กลาง **file journald**
 
-ด้านล่างนี้คือตัวอย่างลักษณะของไฟล์ ดูโดยใช้คำสั่ง cat
+ด้านล่างนี้คือตัวอย่างลักษณะของไฟล์ ดูโดยใช้คำสั่ง `cat`
 
 ```bash
 $ cat /etc/systemd/journald.conf
@@ -104,35 +46,249 @@ $ cat /etc/systemd/journald.conf
 
 ผลลัพท์ที่ได้
 
-```
+```bash
 [Journal]
-#Storage=auto
-#Compress=yes
-#Seal=yes
-#SplitMode=uid
-#SyncIntervalSec=5m
-#RateLimitInterval=30s
-#RateLimitBurst=1000
-#SystemMaxUse=
-#SystemKeepFree=
-#SystemMaxFileSize=
-#SystemMaxFiles=100
-#RuntimeMaxUse=
-#RuntimKeepFree=
-#RuntimeMaxFiles=100
-#MaxRetentionSec=
-#MaxFileSec=1month
-#ForwardToSyslog=yes
-#ForwardToKMsg=no
-#ForwardToConsole=no
-#ForwardToWall=yes
-#TTYPath=/dev/console
-#MaxLevelStore=debug
-#MaxLevelSyslog=debug
-#MaxLevelKMsg=notice
-#MaxLevelConsole=info
-#MaxLevelWall=emerg
+Storage=auto
+Compress=yes
+Seal=yes
+SplitMode=uid
+SyncIntervalSec=5m
+RateLimitInterval=30s
+RateLimitBurst=1000
+SystemMaxUse=
+\SystemKeepFree=
+\SystemMaxFileSize=
+\SystemMaxFiles=100
+\RuntimeMaxUse=
+\RuntimKeepFree=
+\RuntimeMaxFiles=100
+\MaxRetentionSec=
+\MaxFileSec=1month
+\ForwardToSyslog=yes
+\ForwardToKMsg=no
+\ForwardToConsole=no
+\ForwardToWall=yes
+\TTYPath=/dev/console
+\MaxLevelStore=debug
+\MaxLevelSyslog=debug
+\MaxLevelKMsg=notice
+\MaxLevelConsole=info
+\MaxLevelWall=emerg
 ```
+
+#### การดูข้อความบันทึกโดยใช้คำสั่ง **Journalctl**
+- หากต้องการให้แสดงข้อความทั้งหมดโดยไม่มีการกรอง ให้ใช้
+```bash
+$ journalctl
+```
+ตัวอย่าง
+
+<img src="./img/log_read01.png">
+
+#### ดูข้อความบันทึกตาม *Boots*
+- เราสามารถแสดงรายการ *Boots ID* และการประทับเวลาของข้อความแรกและสุดท้ายโดยใช้
+```bash
+$ journalctl --list-boots
+```
+ตัวอย่าง
+
+<img src="./img/log_read02.png">
+
+- หากต้องการดูรายการรายวันให้ใช้ `-b`
+```bash
+$ journalactl -b
+```
+- และหากอยากดูบันทึกจากการ Boots ครั้งก่อนให้ใช้ตัวเลือก `-b` ตามด้วยตัวชี้สัมพัทธ์ `-1`  หรือใช้ Boots ID
+```bash
+$ journalctl -b -1
+
+$ journalctl -b 9fb590b48e1242f58c2579defdbbddc9
+```
+#### การกรองข้อความบันทึกตามเวลา
+- หากต้องการใช้เวลาในรูปแบบเวลาสากลเชิงพิกัด (UTC) ให้ใช้ตัวเลือก `--utc`
+```bash
+$ journalctl --utc
+```
+- หากต้องการดูรายการตั้งแต่วันที่และเวลาใดให้ใช้คำสั่งดังนี้ `--since`
+```bash
+$ journalctl --since “2023-09-30 09:30:00” --until “2023-09-30 12:30:00”
+
+$ journalctl --since “1 hour ago”
+
+$ journalctl --since “2 days ago”
+
+$ journalctl --since today
+
+$ journalctl --since yesterday
+
+```
+
+#### การดูข้อความล่าสุดโดยกำหนดจำนวนบรรทัดที่แสดง
+- หากต้องการกำหนดจำนวนบรรทัดที่แสดงให้ใช้  `-n` แล้วตามด้วยจำนวนบรรทัดที่ต้องการ
+โดยจำนวนบรรทัดโดยค่าเริ่มต้นคือ 10
+```bash
+$ journalctl -n 25
+```
+#### การดูข้อความบันทึกที่สร้างโดย **Kernel**
+- ให้ใช้แฟล็ก `-k` ซึ่งจะได้ ouput คล้ายกับ `dmesg`
+```bash
+$ journalctl -k
+```
+#### การดูข้อความบันทึกที่สร้างโดย *Unit*
+- สำหรับเวลาที่ต้องการดูบันทึกของแต่ล่ะหน่วยให้ใช้ `-u` ตามด้วยหน่วยที่ต้องการ
+```bash
+$ journalctl -u aoache2.service
+```
+#### การดูข้อความบันทึกที่สร้างด้วยกระบวนการเฉพาะ
+- หากต้องการดูบันทึกที่สร้างด้วยวิธีการเฉพาะ ให้ระบุ `PID`
+```bash
+$ journalctl _PID=19487
+```
+#### การดูข้อความบันทึกที่สร้างโดยผู้ใช้หรือ *ID* กลุ่ม
+- หากต้องการดูบันทึกที่สร้างโดยผู้ใช้หรือกลุ่มเฉพาะ ให้ระบุ `ID`
+```bash
+$ journalctl _UID=1000
+```
+#### การดูบันทึกที่สร้างโดย *File*
+- หากต้องการแสดงบันทึกทั้งหมดที่สร้างโดย *file* ให้พิมพ์ `/usr/bin/` ตามด้วย *file* ที่ต้องการดู
+```bash
+$ journalctl /usr/bin/dbus-daemon
+```
+#### ดูข้อความบันทึกตามความสำคัญ
+- โดยคุณสามารถกรองได้โดยใช้ `-p` ตามด้วยระดับที่คุณเลือกโดยแบ่งระดับดังนี้<br>
+    - 0 – ฉุกเฉิน, 
+    - 1 – แจ้งเตือน, 
+    - 2 – วิกฤติ, 
+    - 3 – ผิดพลาด, 
+    - 4 – เตือน, 
+    - 5 – ประกาศ, 
+    - 6 – ข้อมูล,
+    - 7 – แก้ไขจุดบกพร่อง
+```bash
+$ journalctl -p err
+$ journalctl -p 1..4
+$ journalcrtl -p emerg..warning
+```
+#### ดูบันทึกแบบ real time
+- สามารถดูได้โดยใช้ตัวเลือก `-f` (คล้าย *funtion* ของ `tail -f`)
+```bash
+$ journalctl -f
+```
+#### จัดรูปแบบการแสดงผลของบันทึก
+- ถ้าต้องการควบคุมจัดการรูปแบบ *output* ของรายการ **journald** ให้ใช้ `-o` ตามด้วยตัวเลือกดังนี้
+    - cat, 
+    - export, 
+    - json, 
+    - json-pretty, 
+    - json-sse, 
+    - short, 
+    - short-iso, 
+    - short-monotonic, 
+    - short-precise 
+    - verbose
+```bash
+$ journalctl -b -u apache2.service -0 cat
+```
+#### การจัดระบบบันทึก
+- หากต้องการตรวจสอบบันทึก *file* journald ให้ใช้ `--verify` หากทุกอย่างเรียบร้อย `PASS`
+```bash
+$ journalctl --verify
+```
+<img src="./img/log_read03.png">
+
+#### การลบ *File Journald* เก่า
+- โดยคุณสามารถแสดงการใช้ *disk* ปัจจุบันของ **journald** ทั้งหมดได้โดยใช้ `--disk-usage`
+```bash
+$ journalctl --disk-usage
+```
+- หากต้องการลบ *file* เก่าที่ถูกเก็บถาวรให้ใช้คำสั่งตามด้านล่าง
+```bash
+$ sudo journalctl --vacuum-size=50M  
+#delete files until the disk space they use falls below the specified size
+$ sudo journalctl --vacuum-time=1years	
+#delete files so that all journal files contain no data older than the specified timespan
+$ sudo journalctl --vacuum-files=4     
+#delete files so that no more than the specified number of separate journal files remain in storage location
+```
+
+### dmesg
+&nbsp;&nbsp;&nbsp;&nbsp;คือคำสั่งสำหรับใช้แสดงข้อความจาก **Kernel rail link buffer** ระบบผ่านระดับการทำงานหลายระดับ โดยข้อความที่แสดงขะมีข้อมูลเกี่ยวกับอุปกรณ์ ทั้งในระดับ *hardware* และระบบ
+
+&nbsp;&nbsp;&nbsp;&nbsp;โดยคำสั่งส่วนมากจะถูกใช้ดังนี้
+```bash
+$ dmseg [option…]
+```
+#### แสดงรายการ driver ที่โหลดดิ้งหมดใน Kernel
+- โดยเราสามารถใช้เครื่องมือจัการข้อความ เช่น `more`, `tail`, `less` หรือ `grep` กับคำสั่ง `dmesg` ได้เนื่องจาก *output* ของ `dmesg` ไม่พอดีในหน้าเดียว การใช้คำสั่ง dmesg ตามด้วยสัญลักษณ์ **pipr** ( `|` ) `more` หรือ `less` จะทำงห้ข้อความถูกแสดงออกมาในหน้าเดียว
+
+```bash
+$ dmesg | more
+
+$ dmesg | less
+```
+ตัวอย่าง: 
+
+<img src="./img/log_read04.png">
+
+#### แสดงรายการอุปกรณ์ทั้งหมดที่ตรวจพบ
+- ถ้ากต้องการดูว่า **Kernel** ตรวจพบ *hardware* ใดบ้าง ให้ใช้ `| grep sda`
+```bash
+$ dmesg | grep sda
+```
+ตัวอย่าง: 
+
+<img src="./img/log_read05.png">
+
+#### พิมพ์โดยกำหนดจำนวนบรรทัดและส่วนที่ต้องการของ output
+- โดยใช้ `| head -x` โดย `x` คือจำนวนบรรทัดที่ต้องการ ก็จะได้ข้อมูลจากบรรทัดแรกจนถึงบรรทัดที่ `x`
+```bash
+$ dmesg | head -20
+```
+ตัวอย่าง:
+
+<img src="./img/log_read06.png">
+
+- หากต้องการเป็นข้อมูลจากส่วนท้ายก็สามารถใช้รูปแบบคำสั่งตามเดิมได้เลยเพียงเปลี่ยนจาก `head` เป็น `tail`
+```bash
+$ dmesg | tail -20
+```
+ตัวอย่าง: 
+
+<img src="./img/log_read07.png">
+
+#### ค้นหาอุปกรณ์ที่ตรวจพบหรือ *String* เฉพาะ
+- เป็นเรื่องยากที่จะค้นหา *String* เฉพาะเนื่องจากความยาวของ *output* ของ `dmesg` ดังนั้นจึงต้องกรองบรรทัดที่มี *String* โดยใช้ `| grep -i txt` โดย `txt` คือ *String* เฉพาะที่ต้องการหา
+```bash
+$ dmesg | grep -i memory
+```
+ตัวอย่าง:
+
+<img src="./img/log_read08.png">
+
+#### ล้างบันทึก *Buffer dmesg*
+- เราสามารถล้างบันทึกใน *buffer* ได้โดยใช้ `-c`
+```bash
+$ dmesg -c
+```
+#### ตรวจสอบ `dmesg` แบบ *real time*
+- **distro** บางตัวอนุญาตให้ใช้คำสั่ง *watch* **“someting”** เพื่อตรวจสอบตามเวลาจริงได้
+```bash
+$ watch “dmesg | tail -20”
+```
+### Last
+&nbsp;&nbsp;&nbsp;&nbsp;เป็นคำสั่งสำหรับแสดงรายชื่อผู้ *login* เข้ามาล่าสุด
+```bash
+$ last | more
+```
+### Lastcomm
+&nbsp;&nbsp;&nbsp;&nbsp;เป็นคำสั่งที่แสดงคำสั่งสุดท้ายที่ถูกดำเนินการของผู้ใช้แต่ละคน
+```bash
+$ lastcomm root
+```
+ตัวอย่าง: 
+
+<img src="./img/log_read09.png">
+
 ## Log Collection/Server
 some description here
 
