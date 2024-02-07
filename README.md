@@ -290,7 +290,98 @@ $ lastcomm root
 <img src="./img/log_read09.png">
 
 ## Log Collection/Server
-some description here
+### Syslogd
+&nbsp;&nbsp;&nbsp;&nbsp;เป็นระบบที่จัดเตรียม *utilities* ของระบบสองระบบที่ support การทำงาน เพื่อดักจับข้อความจาก s**ystem logging** และ **kernel**
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Syslogd** มีการบันทึกประเภทหนึ่ง ทุกข้อความจะมีบันทึกไว้อย่างน้อยหนึ่งครั้งรวมถึง *hostname field* ด้วย โดยปกติจะมี *program name* แต่นั่นขึ้นอยู่กับความน่าเชื่อถือของ **logging program** ด้วย
+
+### Option
+|flag|description|
+|----|-----------|
+|`-a`|ไม่แสดงการค้นหาชื่อโฮสต์แบบย้อนกลับสำหรับข้อความที่มาจากโฮสต์ระยะไกล และบันทึกที่อยู่ *IP* ของโฮสต์ที่ค้นหาในระยะไกลลงไฟล์บันทึก|
+|`-d`|เปิดใช้งาน **debugging**|
+|`-e`|ระบุ *enhanced rotation* ไฟล์ทั้งหมดทั้งที่ **compressed** และ **uncompressed** ที่มีอยู่ใน *log directory* และถูกสร้างโดย **sydlogd daemon** โดยพิจารณาสำหรับการ *rotation*|
+|`-f config file`|ระบุ *file config* สำรอง|
+|`-m markinterval`|ระบุจำนวนนาทีที่อยู่ระหว่าง *mark command message* ถ้าไม่สามารถทำได้ *mark command* จะส่งข้อความตามลำดับความสำคัญของ **LOG_INFO** โดยจะส่งทุก ๆ 20 นาที|
+|`-M all`|ระบุว่าจะไม่ระงับข้อความที่ซ้ำกันใน *log file* ใช้ได้เฉพาะในกรณีที่ใช้กับ *argument* ทั้งหมด|
+|`-s`|ระบุข้อความเพื่อส่งข้อความแบบ "***shortened***" ไปยังระบบอื่น (ถ้ากำหนดไว้ก็ทำได้นะ) สำหรับข้อความของทั้งหมด **syslog** ไปสร้างบน *local system*|
+|`-r`|ระงับข้อความที่มาจาก *remote hosts*|
+|`-R`|ปิดการรับข้อความที่ได้รับจาก *network* ที่ใช้ *internet domain socket*|
+|`-n`|ระงับข้อความที่ขึ้นต้นด้วย "***Message forwarded from <log_host_name>:*** "ก่อนที่จะส่งไปให้ *remote log host*|
+|`-N`|ระงับการบันทึกข้อมูลลำดับความสำคัญและ *facility information* ของแต่ละ *log message*|
+|`-p`|ระบุเส้นทางอื่นของ *data socket*|
+|`-A additionalLog`|ระบุบันทึกเพิ่มเติมที่ **syslogd daemon** ตรวจสอบ ตาม **default syslogd daemon** โดยจะตรวจสอบไฟล์ `/dev/log` เพื่อหาข้อความ หากระบุได้ระบบจะตรวจสอบไฟล์เพิ่มเติมสำหรับข้อความด้วย บันทึกเพิ่มเติมอาจอยู่ในเส้นทาง *chroot*|
+
+### Configuration file
+&nbsp;&nbsp;&nbsp;&nbsp;ไฟล์กำหนดค่าทำหน้าที่แจ้ง **syslogd daemon** ว่าจะส่งข้อความระบบไปที่ไหน ขึ้นอยู่กับระดับความสำคัญของข้อความและหน่วยงานที่สร้างข้อความนั้น
+
+&nbsp;&nbsp;&nbsp;&nbsp;หากคุณไม่ใช้ `-f` flag ของ **syslogd daemon** จะอ่านไฟล์ที่ถูกกำหนดไว้เป็นค่าเริ่มต้น คือไฟล์ `/etc/syslog.con`
+
+&nbsp;&nbsp;&nbsp;&nbsp;**daemon syslogd** จะไม่สนใจบรรทัดที่เว้นว่างและบรรทัดที่ขึ้นต้นด้วยเครื่องหมาย (`#`)
+
+### Format
+
+&nbsp;&nbsp;&nbsp;&nbsp;บรรทัดในไฟล์การกำหนดค่าสำหรับ daemon syslogd ประกอบด้วย *selector field*, *action field*, และ *optional rotation field* ซึ่งคั่นด้วย `tab` หรือ `space` หลาย ๆ ครั้ง
+- ***Selector field*** ชื่อ *facility* และระดับความสำคัญ (priority level) โดยใช้ `,` (comma) คั่นระหว่างชื่อ *facility* และ `.` (period) คั่นระหว่าง *facility* และระดับความสำคัญใน ***selector field*** ด้วย `;` (semicolon) หากต้องการเลือกทุก *facility* ให้ใช้ `*` (asterisk)
+- ***Action field*** ที่ระบุปลายทาง (ไฟล์, โฮสต์, หรือผู้ใช้) ที่จะรับข้อความ หากมีการส่งไปยัง *remote host* ส่วน *remote system* จะจัดการข้อความตามที่ระบุในไฟล์กำหนดค่าของตนเอง หากต้องการแสดงข้อความบนหน้าจอของผู้ใช้ ให้ใช้ชื่อผู้ใช้ที่ถูกต้องที่เป็นผู้ใช้ที่ล็อกอิน
+- ***Rotation field*** ระบุว่าการหมุนเวียนใช้อย่างไร หากฟิลด์การทำงานเป็นไฟล์ *rotation* สามารถทำตามขนาดหรือเวลาหรือทั้งคู่ได้ ยังสามารถบีบอัดและ/หรือ เก็บไฟล์ที่หมุนเวียนได้
+
+### Facilities
+|Facilities|Description|
+|----------|-----------|
+|kern|Kernel|
+|user|User level|
+|mail|Mail subsystem|
+|daemon|System daemons|
+|auth|Security of authorization|
+|syslog|Syslogd daemon|
+|lpr|Line-printer subsystem|
+|news|New subsystem|
+|uucp|Uucp subsystem|
+|Locall0 through local?|Local use|
+|*|All facilities|
+
+### Priority Levels
+&nbsp;&nbsp;&nbsp;&nbsp;ใช้ระดับความสำคัญของข้อความต่อไปนี้ใน *selector field* ข้อความที่มีระดับความสำคัญที่ระบุและทุกระดับที่สูงกว่าจะถูกส่งตามที่กำหนด
+|Priority|Description|
+|--------|-----------|
+|emerg|ข้อความที่ต้องการทราบทันทีและต้องการการกระทำทันที|
+|alert|ข้อความที่ต้องการการกระทำทันที|
+|crit|ข้อความที่มีปัญหาว่าอาจทำให้ระบบไม่สามารถทำงานได้|
+|err|ข้อความที่ระบุข้อผิดพลาด|
+|warning|ข้อความที่เตือนว่ามีปัญหาหรือความเสี่ยง|
+|notice|ข้อความที่บ่งบอกถึงสถานะหรือเหตุการณ์ที่เกิดขึ้น|
+|info|ข้อความที่ให้ข้อมูลเกี่ยวกับการดำเนินการทั่วไป|
+|debug|ข้อความที่ให้ข้อมูลเกี่ยวกับการดำเนินการเพิ่มเติมสำหรับการตรวจสอบข้อผิดพลาด|
+|none|นอกเหนือจากสิ่งที่เลือกเอาไว้ ระดับความสำคัญนี้มีประโยชน์เฉพาะถ้ามีการกรอกที่มี * (asterisk) ในselector fieldเดียวกันก่อนนี้|
+
+### Destinations
+&nbsp;&nbsp;&nbsp;&nbsp;ใช้เป้าหมายของข้อความต่อไปนี้ใน *action field*
+- `File Name`
+    - ชื่อเต็มของ *path* ที่ไฟล์ถูกเปิดใน *append mode*
+- `@ Host`
+    - *Host name*, นำหน้าด้วยสัญลักษณ์(`@`)
+- `User[, User][...]`
+    - *User names*
+- `*`
+    - All users
+- `centralizedlog LogSpaceName/LogStreamName`
+    - *PowerHA® pureScale® logstream*
+### Rotation	
+&nbsp;&nbsp;&nbsp;&nbsp;ใช้คำหลักการหมุนเวียนต่อไปนี้ใน *rotation field*
+- `rotate`
+    - เป็น *keyword* ที่ต้องอยู่ด้านหลังของ *action field*
+- `size`
+    - ระบุว่า *rotation* ขึ้นอยู่กับขนาด ตามด้วยตัวเลขและ k (kilobytes) หรือ m (megabytes)
+- `time`
+    - ระบุว่า rotation ขึ้นอยู่กับเวลา ตามด้วยตัวเลขและ `h` (hour), `w` (week), `m` (month), `y` (year)
+- `files`
+    - ระบุจำนวนรวมของ *rotated files* ตามด้วยตัวเลข หากไม่ระบุ จะมีจำนวน *rotated files* ได้ไม่จำกัด
+- `compress` 
+    - บันทึก *rotated file* แบบ **compress**
+- `archive`
+    - บันทึก *rotated file* แบบ **copy** ลงใน *directory* ตามที่กำหนดเอาไว้
+
 
 ## Log Files
 some description here
