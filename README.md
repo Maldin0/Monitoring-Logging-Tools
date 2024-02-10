@@ -14,24 +14,6 @@ some Description here
 
 ---
 
-- [ ] daad
-- [x] dad
-
-[^1]: This is the footnote.
-
-> :warning: **Warning**
-
-**bold**
-*italic*
-***bold italic***
-
-
-~~kill yourself~~
-
-```bash
-rm -rf /
-```
-
 ## Log Reader/Analysis
 ### Journalctl
 &nbsp;&nbsp;&nbsp;&nbsp;**Journald** เป็น **daemon** ที่รวบรวมและเก็บบันทึกจากทั้งระบบ โดยข้อความเหล่านั้นเป็นข้อความบูต ข้อความเคอร์เนลและจาก **syslog** หรือ app ต่าง ๆ และเก็บข้อความเหล่านั้นไว้ในตำแหน่งศูนย์กลาง **file journald**
