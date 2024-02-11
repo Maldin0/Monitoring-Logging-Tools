@@ -1,7 +1,5 @@
 # Monitoring-Logging-Tools
 
-some Description here
-
 ## Topic
 - Log Reader/Analysis
     - [ไปที่ Log Reader/Analysis](#log-readeranalysis)
@@ -15,7 +13,15 @@ some Description here
 ---
 
 ## Log Reader/Analysis
-### Journalctl
+
+
+### Journalctl[^bignote]
+
+[^bignote]:- https://th.linux-console.net/?p=678 <br>
+- https://th.linux-console.net/?p=20054<br>
+- https://www.loggly.com/ultimate-guide/using-journalctl/
+
+
 &nbsp;&nbsp;&nbsp;&nbsp;**Journald** เป็น **daemon** ที่รวบรวมและเก็บบันทึกจากทั้งระบบ โดยข้อความเหล่านั้นเป็นข้อความบูต ข้อความเคอร์เนลและจาก **syslog** หรือ app ต่าง ๆ และเก็บข้อความเหล่านั้นไว้ในตำแหน่งศูนย์กลาง **file journald**
 
 ด้านล่างนี้คือตัวอย่างลักษณะของไฟล์ ดูโดยใช้คำสั่ง `cat`
@@ -191,7 +197,10 @@ $ sudo journalctl --vacuum-files=4
 #delete files so that no more than the specified number of separate journal files remain in storage location
 ```
 
-### dmesg
+### dmesg[^bignote]
+[^bignote]:- https://th.linux-console.net/?p=2256<br>
+- https://www.linuxadictos.com/
+
 &nbsp;&nbsp;&nbsp;&nbsp;คือคำสั่งสำหรับใช้แสดงข้อความจาก **Kernel rail link buffer** ระบบผ่านระดับการทำงานหลายระดับ โดยข้อความที่แสดงขะมีข้อมูลเกี่ยวกับอุปกรณ์ ทั้งในระดับ *hardware* และระบบ
 
 &nbsp;&nbsp;&nbsp;&nbsp;โดยคำสั่งส่วนมากจะถูกใช้ดังนี้
@@ -255,12 +264,18 @@ $ dmesg -c
 ```bash
 $ watch “dmesg | tail -20”
 ```
-### Last
+### Last[^bignote]
+
+[^bignote]:- https://www.thaiall.com/ 
+
 &nbsp;&nbsp;&nbsp;&nbsp;เป็นคำสั่งสำหรับแสดงรายชื่อผู้ *login* เข้ามาล่าสุด
 ```bash
 $ last | more
 ```
-### Lastcomm
+### Lastcomm[^bignote]
+
+[^bignote]:- https://blog.desdelinux.net/
+
 &nbsp;&nbsp;&nbsp;&nbsp;เป็นคำสั่งที่แสดงคำสั่งสุดท้ายที่ถูกดำเนินการของผู้ใช้แต่ละคน
 ```bash
 $ lastcomm root
@@ -270,7 +285,7 @@ $ lastcomm root
 <img src="./img/log_read09.png">
 
 ## Log Collection/Server
-[^bignote]
+reference:[^bignote]
 ### Syslogd
 &nbsp;&nbsp;&nbsp;&nbsp;เป็นระบบที่จัดเตรียม *utilities* ของระบบสองระบบที่ support การทำงาน เพื่อดักจับข้อความจาก s**ystem logging** และ **kernel**
 
