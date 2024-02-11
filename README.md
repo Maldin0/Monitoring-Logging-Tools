@@ -269,7 +269,8 @@ $ lastcomm root
 
 <img src="./img/log_read09.png">
 
-## Log Collection/Server[^bignote]
+## Log Collection/Server
+[^bignote]
 ### Syslogd
 &nbsp;&nbsp;&nbsp;&nbsp;เป็นระบบที่จัดเตรียม *utilities* ของระบบสองระบบที่ support การทำงาน เพื่อดักจับข้อความจาก s**ystem logging** และ **kernel**
 
@@ -480,8 +481,7 @@ kern.*
 - ปิดใช้งาน inet domain sockets จะจำกัดความเสี่ยงต่อเครื่องหรือระบบเครือข่ายภายใน
 - ใช้ขั้นตอนที่ 4 และหากปัญหายังคงอยู่และไม่เกี่ยวข้องกับโปรแกรม/เดมอนที่ไม่เหมาะสม ให้ใช้ก้านค้อนควายยาวประมาณ 3.5 ฟุต (ประมาณ 1 เมตร) และพูดคุยกับผู้ใช้ที่เกี่ยวข้อง
 ---
-[^bignote]:
-อ้างอิง : https://www.ibm.com/docs/en/aix/7.2?topic=s-syslogd-daemon <br>
+[^bignote]:อ้างอิง : https://www.ibm.com/docs/en/aix/7.2?topic=s-syslogd-daemon <br>
 https://linux.die.net/man/8/syslogd#:~:text=Syslogd%20provides%20a%20kind%20of,of%20notes%20are%20in%20order.
 
 ---
