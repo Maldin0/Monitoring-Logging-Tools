@@ -559,7 +559,9 @@ boot.log จะเก็บ log เวลาบูทระบบปฏิบั
 ## Working with Texts
 ไฟล์ส่วนใหญ่ในระบบมักจะถูกเก็บในรูปแบบของข้อความ ซึ่งในไฟล์ก็จะประกอบไปด้วยข้อความจำนวนมาก การจะดึงเอาข้อมูลที่ต้องการออกมาจึงต้องมีการใช้คำสั่งเพื่อให้ผู้ใช้งานจัดการกับข้อความได้เพื่อเพิ่มประสิทธิภาพในการแสดงออกของข้อมูล
 
-### `cat`
+### `cat`[^10]
+[^10]:- https://www.geeksforgeeks.org/how-to-create-a-text-file-using-the-command-line-in-linux/
+
 เป็นคำสั่งที่ใช้ในการแสดงข้อมูลในไฟล์นั้น ๆ โดยใช้คำสั่ง `cat` ตามด้วยชื่อไฟล์ที่ต้องการแสดง
 
 ```bash
@@ -582,7 +584,9 @@ $ cat > food.txt
 $ cat >> food.txt
 ```
 
-### `echo`/`printf`
+### `echo`/`printf`[^11]
+[^11]:- https://www.geeksforgeeks.org/how-to-create-a-text-file-using-the-command-line-in-linux/
+
 2 คำสั่งนี้ทำหน้าที่คล้ายกับ `cat` แต่มีความหลากหลายในการใช้งานมากกว่า
 
 `echo` สร้างพร้อมเพิ่มข้อความพร้อมกันได้โดยพิมพ์
@@ -602,7 +606,15 @@ $ echo >> file1.txt >> file2.txt
 $ printf "Hello\n" > greet.txt
 ```
 
-### Vi / Vim Editor
+### Vi / Vim Editor[^12][^13][^14][^15]
+[^12]:- https://www.geeksforgeeks.org/how-to-create-a-text-file-using-the-command-line-in-linux/
+
+[^13]:- https://arnondora.in.th/basic-vim/
+
+[^14]:- https://web.stanford.edu/class/cs107/resources/vim#:~:text=vim%20has%20two%20%22modes%22%3A,and%20edit%20text%20in%20bulk.
+
+[^15]:- https://towardsdatascience.com/vim-tutorial-edit-text-like-a-pro-ea13e45010f5
+
 `vi` และ `vim` เป็นโปรแกรมที่ใช้ในการแก้ไขข้อความที่ติดตั้งพร้อมมากับ Linux Server
 
 `vim` คือ `vi` ที่ถูกพัฒนาขึ้นมาใหม่ โดยมีความสามารถที่มากกว่า `vi` และมีการใช้งานที่ง่ายขึ้น ใช้งานโดยใช้คำสั่ง `vim` ตามด้วยชื่อไฟล์ที่ต้องการแก้ไข
@@ -699,7 +711,9 @@ $ vim food.txt
 | `U`        | ทำการ Undo ในบรรทัดนั้น ๆ |
 | `Ctrl + r` | ทำการ Redo             |
 
-### Pager (less/more)
+### Pager (less/more)[^16]
+[^16]:- https://ioflood.com/blog/less-linux-command/#:~:text=The%20'more'%20command%20is%20similar,through%20a%20file%2C%20not%20backward.&text=To%20navigate%20to%20the%20next%20screen%2C%20simply%20press%20the%20spacebar.
+
 `less` และ `more` เป็นคำสั่งที่ใช้ในการอ่านและค้นหาข้อมูลในไฟล์ขนาดนิยมใช้กับไฟล์ขนาดใหญ่เพื่อที่จะช่วยให้หาข้อมูลได้ง่ายขึ้น ซึ่งจะทำให้เราสามารถเลื่อนขึ้นลงไปด้วย Arrow keys
 
 ```bash
@@ -719,7 +733,9 @@ $ more food.txt
 
 more จะคล้ายกับ less เพียงแต่ more จะเลื่อนหน้าลงได้อย่างเดียวเลื่อนขึ้นไม่ได้
 
-### Head/Tail
+### Head/Tail[^17]
+[^17]:- https://www.baeldung.com/linux/head-tail-commands#:~:text=As%20their%20names%20imply%2C%20the,the%20result%20to%20standard%20output.
+
 `head` และ `tail` เป็นคำสั่งที่ใช้ในการแสดงข้อมูลบางส่วนของไฟล์ โดย `head` จะแสดงข้อมูลบรรทัดแรก ๆ ของไฟล์ และ `tail` จะแสดงข้อมูลบรรทัดสุดท้าย ๆ ของไฟล์
 
 ```bash
@@ -744,7 +760,12 @@ $ head -n 5 food.txt
 $ tail -n 5 food.txt
 ```
 
-### Grep/Pipe
+### Grep/Pipe[^18][^19][^20]
+[^18]:- https://earthly.dev/blog/linux-text-processing-commands/
+
+[^19]:- https://www.scaler.com/topics/pipe-command-in-linux/
+
+[^20]:- https://www.geeksforgeeks.org/grep-command-in-unixlinux/
 
 `grep` เป็นคำสั่งที่ใช้ในการค้นหาข้อความในไฟล์ โดยเราสามารถใช้คำสั่ง `grep` พร้อมกับข้อความที่ต้องการค้นหา และชื่อไฟล์ที่ต้องการค้นหา
 
@@ -776,7 +797,13 @@ $ ls -l | grep '.txt'
 | `^`    | แสดงข้อความที่คำในเงื่อนไขอยู่ตัวแรกสุดของบรรทัด                  |
 | `$`    | ใช้แสดงข้อความที่จบบรรทัดด้วยคำในเงื่อนไข                       |
 
-### Standard IO
+### Standard IO[^21][^22][^23]
+[^21]:- https://content.netdevgroup.com/labs/linux-essentials/vBhGP3e4gJ/
+
+[^22]:- https://www.makeuseof.com/linux-standard-input-output/
+
+[^23]:- https://www.educative.io/answers/how-to-do-input-output-redirection-in-linux
+
 คือการที่ระบบปฏิบัติการ linux สามารถช่วยให้เราเปลี่ยนช่องในการ input หรือ output โดยแบ่งได้เป็น 3 ส่วนคือ
 - Standard Input (stdin) คือ input มาตรฐานในการรับคำสั่งโดยมักจะมาจาก keyboard แต่อาจมาจากไฟล์ก็ได้ สามารถใช้ < ในการเปลี่ยนช่อง input ได้ เช่น tr a-z A-Z > ex.txt เป็นการให้เรา input ด้วย keyboard ซึ่งข้อมูลจะอยู่ใน ex.txt
 - Standard Output (stdout) คือ output มาตฐานในการแสดงผลของ command โดยมักจะแสดงผ่านทางหน้าจอ สามารถใช้ > ในการเปลี่ยนช่อง output ได้ เช่น ls > file.txt
