@@ -501,6 +501,10 @@ https://linux.die.net/man/8/syslogd#:~:text=Syslogd%20provides%20a%20kind%20of,o
 
 ---
 ## Log Files
+reference:[^9]
+
+[^9]:- https://stackify.com/linux-logs/?fbclid=IwAR3voKfiAeL16lCU8nSwy_UbJJ6D8a6o0voL227B-srGwj6-O5UaF4pPPEs
+
 ไฟล์ Log จะเก็บการทำงานต่าง ๆ ของ OS แอปพลิเคชัน และระบบ เมื่อเกิดปัญหากับระบบ หรือ applitcation การวิเคราะห์ logfiles ถือเป็นสิ่งแรกที่ผู้ดูแลระบบต้องทำ
 ### หลักการทำงานของไฟล์ Log
 #### Troubleshooting
