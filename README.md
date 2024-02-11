@@ -15,11 +15,11 @@
 ## Log Reader/Analysis
 
 
-### Journalctl[^bignote]
+### Journalctl[^1][^2][^3]
 
-[^bignote]:- https://th.linux-console.net/?p=678 <br>
-- https://th.linux-console.net/?p=20054<br>
-- https://www.loggly.com/ultimate-guide/using-journalctl/
+[^1]:- https://th.linux-console.net/?p=678
+[^2]:- https://th.linux-console.net/?p=20054
+[^3]:- https://www.loggly.com/ultimate-guide/using-journalctl/
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Journald** เป็น **daemon** ที่รวบรวมและเก็บบันทึกจากทั้งระบบ โดยข้อความเหล่านั้นเป็นข้อความบูต ข้อความเคอร์เนลและจาก **syslog** หรือ app ต่าง ๆ และเก็บข้อความเหล่านั้นไว้ในตำแหน่งศูนย์กลาง **file journald**
@@ -197,9 +197,9 @@ $ sudo journalctl --vacuum-files=4
 #delete files so that no more than the specified number of separate journal files remain in storage location
 ```
 
-### dmesg[^bignote]
-[^bignote]:- https://th.linux-console.net/?p=2256<br>
-- https://www.linuxadictos.com/
+### dmesg[^4][^5]
+[^4]:- https://th.linux-console.net/?p=2256<br>
+[^5]:- https://www.linuxadictos.com/
 
 &nbsp;&nbsp;&nbsp;&nbsp;คือคำสั่งสำหรับใช้แสดงข้อความจาก **Kernel rail link buffer** ระบบผ่านระดับการทำงานหลายระดับ โดยข้อความที่แสดงขะมีข้อมูลเกี่ยวกับอุปกรณ์ ทั้งในระดับ *hardware* และระบบ
 
@@ -264,17 +264,17 @@ $ dmesg -c
 ```bash
 $ watch “dmesg | tail -20”
 ```
-### Last[^bignote]
+### Last[^6]
 
-[^bignote]:- https://www.thaiall.com/ 
+[^6]:- https://www.thaiall.com/ 
 
 &nbsp;&nbsp;&nbsp;&nbsp;เป็นคำสั่งสำหรับแสดงรายชื่อผู้ *login* เข้ามาล่าสุด
 ```bash
 $ last | more
 ```
-### Lastcomm[^bignote]
+### Lastcomm[^7]
 
-[^bignote]:- https://blog.desdelinux.net/
+[^7]:- https://blog.desdelinux.net/
 
 &nbsp;&nbsp;&nbsp;&nbsp;เป็นคำสั่งที่แสดงคำสั่งสุดท้ายที่ถูกดำเนินการของผู้ใช้แต่ละคน
 ```bash
